@@ -30,15 +30,22 @@ Rules are injected using MapBinder from `RuleModule`.
 
 #### Steps
 1. mvn clean compile package
-`mvn clean compile package`
+`mvn clean package`
 2. start event source :
-`  Using ide run class: com.cred.producer.EventSource`
+`  Using ide run class: com.cred.producer.EventSource` or
+` mvn exec:java -Dexec.mainClass=com.cred.producer.EventSource`
 2. start IdempotentFilter
-   Using ide run class : `com.cred.workersStreams.CustomStreamRunner -p com.cred.workersStreams.IdempotentFilterProcessor`
+   Using ide run class : `com.cred.workersStreams.CustomStreamRunner -p com.cred.workersStreams.IdempotentFilterProcessor` or
+   ` mvn exec:java -Dexec.mainClass=com.cred.workersStreams.CustomStreamRunner -Dexec.args="-p com.cred.workersStreams.IdempotentFilterProcessor"
+`
 3. Start Event Decorator
     Using ide run class : `com.cred.workersStreams.CustomStreamRunner -p com.cred.workersStreams.SaveAndDecorateEventProcessor`
+  or ` mvn exec:java -Dexec.mainClass=com.cred.workersStreams.CustomStreamRunner -Dexec.args="-p com.cred.workersStreams.SaveAndDecorateEventProcessor"
+`
 4. Start Rule Processor
     Using ide run class : `com.cred.workersStreams.CustomStreamRunner -p com.cred.workersStreams.RulesProcessor`
+    or ` mvn exec:java -Dexec.mainClass=com.cred.workersStreams.CustomStreamRunner -Dexec.args="-p com.cred.workersStreams.RulesProcessor"
+`
 5. Listen events to send SMS on to customers:
     `on command line run : `
     `kafka-console-consumer --bootstrap-server localhost:9092 --topic instasms-events-for-sms-alerts-1`
