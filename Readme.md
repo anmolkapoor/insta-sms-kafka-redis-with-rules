@@ -37,5 +37,3 @@ Configuration files:
 1. Yaml file `app_config.yaml` -> Configs for rules
 2. Constants.java -> Constants
 3. EventDto.json -> Sample Json to be used as base.
-
-Anmol Kapoor
