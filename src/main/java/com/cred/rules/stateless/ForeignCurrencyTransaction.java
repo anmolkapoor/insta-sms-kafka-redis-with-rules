@@ -5,13 +5,14 @@ import com.cred.models.EventDto;
 import com.cred.rules.StatelessRule;
 import javafx.util.Pair;
 
+import javax.inject.Inject;
 import java.util.Optional;
 
 import static com.cred.commons.Constants.RULE_FOREIGN_CURRENCY_TXN_REASON_VALUE_GREATER_THAN_LIMIT;
 public class ForeignCurrencyTransaction implements StatelessRule {
     private final AppConfiguration appConfiguration;
 
-
+    @Inject
     public ForeignCurrencyTransaction(AppConfiguration appConfiguration) {
         this.appConfiguration = appConfiguration;
     }
