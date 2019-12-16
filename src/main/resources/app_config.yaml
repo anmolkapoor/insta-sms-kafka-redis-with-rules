@@ -1,0 +1,6 @@
+highValueTransactionLimit: 100
+customersOriginalCurrency: "INR"
+foreignCurrencyHighValueAmount: 5000
+duplicateTransactionTimeDurationInMinutes: 60
+highSpendOnSingleMerchantTimeDurationInHours: 24
+highSpendOnSingleMerchantTotalAmount: 30000
