@@ -48,7 +48,7 @@ public class SaveAndDecorateEventProcessor implements CustomStreamProcessor {
                 }).map(new KeyValueMapper<String, EventDto, KeyValue<String, EventDtoWithPastCustomersEvents>>() {
             @Override
             public KeyValue<String, EventDtoWithPastCustomersEvents> apply(String key, EventDto eventDto) {
-                log.info("Key: " + key + " eventId" + eventDto.getEventId());
+                log.info("Received Key: " + key + " eventId: " + eventDto.getEventId());
                 String redisKey = REDIS_SAVED_LIST_EVENT_KEY_PREFIX + eventDto.getUserId();
                 // Generate a redis dto
                 Optional<RedisMinimalEventEntry> redisMinimalEventEntry = processorUtil.convertEventDtoToRedisSavedEventInfoDto(eventDto);

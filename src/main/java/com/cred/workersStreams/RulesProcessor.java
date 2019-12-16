@@ -51,7 +51,6 @@ public class RulesProcessor implements CustomStreamProcessor {
         Map<String, String> ruleAndReasonMap = new HashMap<>();
 
 
-
         for (StatelessRule rule : statelessRules) {
             // apply stateless rule
 
@@ -70,7 +69,7 @@ public class RulesProcessor implements CustomStreamProcessor {
 
         }
         if (ruleAndReasonMap.isEmpty()) {
-            log.info("EventId : " + eventDto.getEventId() + " rules : " + ruleAndReasonMap.toString());
+
             return new Pair<>(false, Optional.empty());
         } else {
             FinalSMSToBeSentEventsDto finalSMSToBeSentEventsDto = new FinalSMSToBeSentEventsDto();
@@ -82,7 +81,11 @@ public class RulesProcessor implements CustomStreamProcessor {
             } catch (JsonProcessingException e) {
                 return new Pair<>(true, Optional.empty());
             }
-            log.info("EventId : " + eventDto.getEventId() + " rules : " + ruleAndReasonMap.toString());
+            if (ruleAndReasonMap.isEmpty()) {
+                log.info("EventId : " + eventDto.getEventId() + " No Rules triggered");
+            } else {
+                log.info("EventId : " + eventDto.getEventId() + " rules : " + ruleAndReasonMap.toString());
+            }
             return new Pair<>(true, Optional.of(finalSMSToBeSentEventsDtoStr));
         }
 

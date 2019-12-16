@@ -50,17 +50,16 @@ public class IdempotentFilterProcessor implements CustomStreamProcessor {
 
                 .filter((key, eventDto) -> {
                     String eventId = eventDto.getEventId();
-                    log.info("Key: "+key+" eventId"+eventId);
                     String redisKey = REDIS_EVENT_IDEMPOTENT_KEY_PREFIX + eventId;
                     try (Jedis jedis = jedisPool.getResource()) {
                         Long isPresent = jedis.setnx(redisKey, "1");
                         if (isPresent == 0) {
-                            log.info("event : "+eventId +" was already received before ");
+                            log.error("event : "+eventId +" was already received before ");
                             return false;
 
                         } else {
                             jedis.expire(redisKey, REDIS_EVENT_IDEMPOTENT_KEY_TTL_IN_SEC);
-                            log.info("publising event : "+eventId);
+                            log.info("new event event : "+eventId);
                             return true;
                         }
                     }

@@ -56,7 +56,7 @@ public class EventSource {
                 EventDto eventDto = objectMapper.readValue(file, EventDto.class);
                 // Randomizing sometime to add duplicate evnts
                 int noise = random.nextInt(2);
-                int amount = random.nextInt(1000);
+                int amount = random.nextInt(15000);
                 int merch = random.nextInt(1000);
 
 
@@ -77,7 +77,7 @@ public class EventSource {
 
                 log.info(EVENTS_PRODUCER_TOPIC + " Publishing : " + eventDtoStr);
                 producer.send(new ProducerRecord<>(EVENTS_PRODUCER_TOPIC, eventDtoStr));
-                Thread.sleep(1000);
+                Thread.sleep(100);
             }
         } catch (final Exception e) {
             log.error(e.getLocalizedMessage(), e);

@@ -1,4 +1,4 @@
-highValueTransactionLimit: 100
+highValueTransactionLimit: 10000
 customersOriginalCurrency: "INR"
 foreignCurrencyHighValueAmount: 5000
 duplicateTransactionTimeDurationInMinutes: 60
