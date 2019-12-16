@@ -3,6 +3,7 @@
 2. `Kafka streams` for event processing
 3. `Redis` for storage : idempotency check and saving customer context
 
+
     
 #### Event flow :
 1. Messages pushed to topic  `instasms-producer-topic-1` by `EventSource` .
@@ -18,8 +19,8 @@ Rules are injected using MapBinder from `RuleModule`.
 5. If successful events with Executed Rule and Reason is published to `instasms-events-for-sms-alerts-1`
  
 #### Prerequisites:
-* `kafka` working on `localhost:9092`
-* `redis` working on `localhost:6379`
+* `kafka` working on `localhost:9092` . Install using `brew install kafka` and `zookeeper-server-start  & kafka-server-start /usr/local/etc/kafka/server.properties/usr/local/etc/kafka/zookeeper.properties`
+* `redis` working on `localhost:6379` . Install using `brew install redis` and `redis-server /usr/local/etc/redis.conf`
 
 #### Events details
 * `EventDto` : DTO recieved, 
@@ -32,19 +33,15 @@ Rules are injected using MapBinder from `RuleModule`.
 1. mvn clean compile package
 `mvn clean package`
 2. start event source :
-`  Using ide run class: com.cred.producer.EventSource` or
 ` mvn exec:java -Dexec.mainClass=com.cred.producer.EventSource`
 2. start IdempotentFilter
-   Using ide run class : `com.cred.workersStreams.CustomStreamRunner -p com.cred.workersStreams.IdempotentFilterProcessor` or
    ` mvn exec:java -Dexec.mainClass=com.cred.workersStreams.CustomStreamRunner -Dexec.args="-p com.cred.workersStreams.IdempotentFilterProcessor"
 `
 3. Start Event Decorator
-    Using ide run class : `com.cred.workersStreams.CustomStreamRunner -p com.cred.workersStreams.SaveAndDecorateEventProcessor`
-  or ` mvn exec:java -Dexec.mainClass=com.cred.workersStreams.CustomStreamRunner -Dexec.args="-p com.cred.workersStreams.SaveAndDecorateEventProcessor"
+  ` mvn exec:java -Dexec.mainClass=com.cred.workersStreams.CustomStreamRunner -Dexec.args="-p com.cred.workersStreams.SaveAndDecorateEventProcessor"
 `
 4. Start Rule Processor
-    Using ide run class : `com.cred.workersStreams.CustomStreamRunner -p com.cred.workersStreams.RulesProcessor`
-    or ` mvn exec:java -Dexec.mainClass=com.cred.workersStreams.CustomStreamRunner -Dexec.args="-p com.cred.workersStreams.RulesProcessor"
+     ` mvn exec:java -Dexec.mainClass=com.cred.workersStreams.CustomStreamRunner -Dexec.args="-p com.cred.workersStreams.RulesProcessor"
 `
 5. Listen events to send SMS on to customers:
     `on command line run : `
